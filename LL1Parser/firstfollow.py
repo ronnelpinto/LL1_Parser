@@ -1,8 +1,12 @@
+firstset={}
+followset={}
+parsingtable={}
+
 class FirstFollow:
-    def __init__(self):#need to pass the grammar here..
-        self.gram={'E':['TB'],'B':['+TB','n'], 'T':['FC'],'C':['*FC','n'],'F':['(E)','d']}
-        self.term=['+','*','(',')','d','n','$']
-        self.nonterm=['E','T','B','C','F']
+    def __init__(self,gram,ter,nonter):#need to pass the grammar here..
+        self.gram=gram
+        self.term=ter
+        self.nonterm=nonter
         
         ''' def findset(self):
         for i in self.nonterm:
@@ -141,13 +145,14 @@ class FirstFollow:
             
                 
     def printparser(self):
+        print("---"*40)
         for i in parsingtable:
             for j in parsingtable[i]:
                 for k in parsingtable[i][j]:
                 
-                    print("[",i, ",",j, "]",":",k,end="   ")
-            print("  ")
-            print()
+                    print("[",i, ",",j, "]",":",k,end=" ")
+            print("")
+            print("---"*30)
                 
 
                                                                               
@@ -171,27 +176,45 @@ class FirstFollow:
                    break
                    
              return fir'''
-firstset={}
-followset={}
-parsingtable={}
-a=FirstFollow()
-#a.findset()
-nont=['E','T','B','C','F']
-# print('FOLLOW :',"e " ,a.first('E'))
-for i in nont:
-    fi=a.first(i)
-    fo=a.follow(i)
-    #print('FOLLOW :',i," " ,a.first(i))
-    #print('FIRST  :',i," ",a.follow(i))
-    firstset[i]=fi
-    followset[i]=fo
+def createparser(text):
+    text = text.split('\n')
+    #for t in text:
+        #print(text[0])
+        #print(type(text[0]))
+    #(key,value)=text[0].split[':']
+    #print(key,value)
+    #grammar=dict(text[0])
+    t=text[0]
+    t =t.split(",,")
+    dict={}
+    for i in t:
+        print(i[0])
+        dict[i[0]]=[i[3:-1]]
+        k=i[3:-1].split(",")
+        dict[i[0]]=k
+
+    terminals=list(text[1].split(","))
+    nonterminals=list(text[2].split(","))
+    print(terminals,nonterminals)
+    a=FirstFollow(dict,terminals,nonterminals)
+    #a.findset()
+    nont=nonterminals
+    # print('FOLLOW :',"e " ,a.first('E'))
+    for i in nont:
+        fi=a.first(i)
+        fo=a.follow(i)
+        #print('FOLLOW :',i," " ,a.first(i))
+        #print('FIRST  :',i," ",a.follow(i))
+        firstset[i]=fi
+        followset[i]=fo
+        
     
-
-print(firstset)
-print(followset)
-for i in nont:
-    a.parsingtable(i)
-
-a.printparser()
-
-#print(a.first('('))
+    #print(firstset)
+    #print(followset)
+    for i in nont:
+        a.parsingtable(i)
+    
+    a.printparser()
+    return parsingtable
+    
+    #print(a.first('('))

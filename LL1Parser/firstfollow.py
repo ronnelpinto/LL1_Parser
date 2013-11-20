@@ -3,10 +3,11 @@ followset={}
 parsingtable={}
 
 class FirstFollow:
-    def __init__(self,gram,ter,nonter):#need to pass the grammar here..
+    def __init__(self,gram,ter,nonter,start):#need to pass the grammar here..
         self.gram=gram
         self.term=ter
         self.nonterm=nonter
+        self.start=start
         
         ''' def findset(self):
         for i in self.nonterm:
@@ -27,26 +28,26 @@ class FirstFollow:
             fir.extend(ip)
         else:
             for i in self.gram[ip]:
-               # print('1')
+                # print('1')
                 #print(i[0],":",i,"::")
                 if(i[0] in self.term):
-                     #print('2')
-                     #print(i[0])
-                     #print(ctr)
-                     fir.extend(i[0])
+                    #print('2')
+                    #print(i[0])
+                    #print(ctr)
+                    fir.extend(i[0])
                 else:
-                     #print('3')
-                     length=len(i)
-                     while(ctr<length):
-                          #print('4')
-                          if('n' in self.gram[i[ctr]]):   # 'n' is for null symbol
+                    #print('3')
+                    length=len(i)
+                    while(ctr<length):
+                        #print('4')
+                        if('n' in self.gram[i[ctr]]):   # 'n' is for null symbol
                                 #print('5')
                                 #print(ctr)
                                 fir.extend(self.first(i[ctr]))
                                 #print(fir)
                                 ctr+=1
                                 #print(ctr)
-                          else:
+                        else:
                                 #print('6')
                                 
                                 fir.extend(self.first(i[ctr]))
@@ -58,7 +59,7 @@ class FirstFollow:
 
     def follow(self,ip):
         foll=[]
-        if(ip=='E'):
+        if(ip==self.start):
             foll.extend('$')
         for key in self.gram.keys():#iterating thorugh the keys of the grammar
             vals=self.gram[key]
@@ -146,18 +147,18 @@ class FirstFollow:
                 
     def printparser(self):
         print("---"*40)
-        for i in parsingtable:
-            for j in parsingtable[i]:
-                for k in parsingtable[i][j]:
+        for i in self.nonterm:
+            for j in self.term:
+                if j!='n':
+                    for k in parsingtable[i][j]:
                 
-                    print("[",i, ",",j, "]",":",k,end=" ")
+                        print("[",i, ",",j, "]",":",k,end=" ")
             print("")
             print("---"*30)
                 
 
                                                                               
-                                                        #must remove lambdann
-                        
+                                                    
                         
                         
         
@@ -195,8 +196,9 @@ def createparser(text):
 
     terminals=list(text[1].split(","))
     nonterminals=list(text[2].split(","))
-    print(terminals,nonterminals)
-    a=FirstFollow(dict,terminals,nonterminals)
+    start=text[3]
+    print(terminals,nonterminals,start)
+    a=FirstFollow(dict,terminals,nonterminals,start)
     #a.findset()
     nont=nonterminals
     # print('FOLLOW :',"e " ,a.first('E'))
@@ -209,8 +211,8 @@ def createparser(text):
         followset[i]=fo
         
     
-    #print(firstset)
-    #print(followset)
+    print(firstset)
+    print(followset)
     for i in nont:
         a.parsingtable(i)
     

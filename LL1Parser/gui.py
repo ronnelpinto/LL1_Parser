@@ -50,7 +50,7 @@ class MainWIndow(Frame):
                 
     def initInfoLabel(self, textParam = "Information: ", flag = 1):
         if flag is 1:
-            l3 = Label(self, text = textParam, background='#2ed')
+            l3 = Label(self, text = textParam, background='#3f3')
         else:
             l3 = Label(self, text = textParam, background='#a77')
         l3.place(relx = 0.79, rely = 0.1, relwidth = 0.2)    

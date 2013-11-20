@@ -1,0 +1,4 @@
+S:[E],,E:[aXY],,X:[a,n],,Y:[bEa]
+a,b,n,$
+S,E,X,Y
+S

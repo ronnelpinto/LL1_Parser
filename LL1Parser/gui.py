@@ -74,19 +74,12 @@ class MainWIndow(Frame):
             displayText = ''
             for i in range(len(self.text)):
                 displayText += (self.text[i] + '\n')
-            self.initInputText(displayText)    
-            #print(displayText) #testing #success                 
-            #for i in text: #testing #success
-                #print(i)       #testing
+            self.initInputText(displayText)
         
     def invokeParser(self):
         #call to generateparser code module
-
         parsingtable = createparser(self.inputText.get( '0.0', END)) 
-        
-        outputText = ''
-        
-        #print("---"*40)
+        outputText = ''        
         outputText +="---"*35
         for i in parsingtable:
             outputText +="\n "
@@ -95,16 +88,12 @@ class MainWIndow(Frame):
                 
                     outputText += "[ "+i+ ","+j+ " ]" "::" +k+ ' '
             outputText +="\n " 
-            outputText +="---"*35
-            #print("")
-            #print("---"*40)
-            #outputText += (parsingtable[i] + '\n')                
+            outputText +="---"*35              
         print('outputText:', outputText)
         self.initOutputText(outputText)
         infoString = 'Success!\nThe parsing\ntable has been\nsuccessfully\ncreated' 
         self.initInfoLabel(infoString, flag = 1)
-                    
-    
+                       
 def main():
     root = Tk()
     app = MainWIndow(root)
